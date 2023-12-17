@@ -1,9 +1,10 @@
-name: Docker
+name: Build and push docker image
 
 on:
   push:
     paths:
       - "VERSION"
+  workflow_dispatch:
 
 env:
   REGISTRY: docker.io
@@ -11,8 +12,9 @@ env:
   
 jobs:
   build:
-
     runs-on: ubuntu-latest
+    outputs:
+      version: ${{ steps.get-version.outputs.version }}
     permissions:
       contents: read
       packages: write
@@ -33,7 +35,7 @@ jobs:
       # Read contents of version file
       - name: Read VERSION file
         id: get-version
-        run: echo "::set-output name=version::$(cat VERSION | cut -c 2-)"
+        run: echo "version=$(cat VERSION | cut -c 2-)" >> $GITHUB_OUTPUT
         
       # Login against a Docker registry except on PR
       # https://github.com/docker/login-action
@@ -52,4 +54,4 @@ jobs:
         with:
           context: .
           push: true
-          tags: ${{env.IMAGE_NAME}}:${{ steps.get-version.outputs.version }}
+          tags: ${{ env.IMAGE_NAME }}:${{ steps.get-version.outputs.version }}, ${{ env.IMAGE_NAME }}:latest
