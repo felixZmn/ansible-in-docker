@@ -1,6 +1,6 @@
 # ansible in docker
 
-This is a inofficial docker image for ansible based on alpine linux.
+This is a inofficial docker image for [ansible](https://github.com/ansible/ansible) based on alpine linux.
 An current official docker image for ansible is not available.
 This image is available on [docker hub](https://hub.docker.com/r/felixzimmermann/ansible).
 
