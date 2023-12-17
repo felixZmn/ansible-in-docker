@@ -15,7 +15,9 @@ jobs:
           curl -sL https://api.github.com/repos/ansible/ansible/releases/latest | jq -r ".tag_name" > VERSION
       - name: Check if file is modified
         id: git-check
-        run: "modified=$([ -z '`git status --porcelain`' ] && echo 'false' || echo 'true')"
+        run: |
+          MODIFIED=$([ -z "`git status --porcelain`" ] && echo "false" || echo "true")
+          echo "modified=$MODIFIED" >> $GITHUB_OUTPUT
       - name: Commit latest release version
         if: steps.git-check.outputs.modified == 'true'
         run: |
