@@ -1,7 +1,8 @@
 # ansible in docker
 
-This is a inofficial docker image for [ansible](https://github.com/ansible/ansible) based on alpine linux.
-An current official docker image for ansible is not available.
+This is a inofficial docker image for [ansible](https://github.com/ansible/ansible) based on alpine linux, because
+an official image is not available.
+
 This image is available on [docker hub](https://hub.docker.com/r/felixzimmermann/ansible).
 
 # Contents
@@ -10,7 +11,7 @@ Besides an full ansible installation, this image contains openssh-client to conn
 
 # Tags
 
-The folling tags are available:
+The follwoing tags are available:
 
 -   `latest` - latest version of ansible
 -   `x.y.z` - ansible version x.y.z, e.g. 2.16.0
@@ -24,7 +25,7 @@ To connect safely to remote hosts, the ssh key should be mounted into the contai
 An generic example for the usage of this image is shown below.
 
 ```bash
-satan@hell:~$ docker run --rm -it \
+user@host:~$ docker run --rm -it \
 -v ${HOME}/.ssh/:/root/.ssh/ \
 -v <path/to/inventory>:/etc/ansible/hosts \
 -v <path/to/playbooks/folder>:/ansible/playbooks/ \
@@ -34,7 +35,7 @@ ansible <tool> <playbook>
 An more specific example for the usage is shown with the ansible-playbook command below.
 
 ```bash
-satan@hell:~$ docker run --rm -it \
+user@host:~$ docker run --rm -it \
 -v ${HOME}/.ssh/:/root/.ssh/ \
 -v ${HOME}/ansible-playbooks/inventory.yaml:/etc/ansible/hosts \
 -v ${HOME}/ansible-playbooks/playbooks/:/ansible/playbooks/ \
@@ -46,11 +47,11 @@ ansible ansible-playbook ping.yaml
 To make the usage of this image more convenient, you can create for each tool an alias in your `.bashrc` or `.zshrc` file.
 
 ```bash
-satan@hell:~$ alias ansible-playbook='docker run --rm -it -v ${HOME}/.ssh/:/root/.ssh/ -v ${HOME}/ansible-playbooks/inventory.yaml:/etc/ansible/hosts -v ${HOME}/ansible-playbooks/playbooks/:/ansible/playbooks/ ansible ansible-playbook'
+alias ansible-playbook='docker run --rm -it -v ${HOME}/.ssh/:/root/.ssh/ -v ${HOME}/ansible-playbooks/inventory.yaml:/etc/ansible/hosts -v ${HOME}/ansible-playbooks/playbooks/:/ansible/playbooks/ ansible ansible-playbook'
 ```
 
 The alias above can be used like the original ansible-playbook command.
 
 ```bash
-satan@hell:~$ ansible-playbook ping.yaml
+user@host:~$ ansible-playbook ping.yaml
 ```
